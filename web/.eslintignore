@@ -1,0 +1,7 @@
+.idea
+.vscode
+dist
+build
+node_modules
+.eslintrc.json
+src/semantic

@@ -1,0 +1,54 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "jest": true,
+        "node": true
+    },
+    "extends": ["airbnb-base", "prettier", "plugin:jsx-a11y/recommended", "plugin:react/recommended"],
+    "plugins": ["jsx-a11y", "react", "react-hooks", "simple-import-sort"],
+    "rules": {
+        "max-len": ["warn", 200],
+        "import/no-cycle": "warn",
+        "no-param-reassign": 0,
+        "class-methods-use-this": 0,
+        "no-console": 2,
+        "import/prefer-default-export": "off",
+        "react/no-string-refs": 1,
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": ["src/setupTests.js", "src/**/*.test.*", "**/*.stories.js", "**/*/__tests__/**/*"]
+            }
+        ],
+        "no-underscore-dangle": ["error", { "allow": ["__html"] }],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "max-classes-per-file": 1,
+        "jsx-a11y/label-has-associated-control": [
+            2,
+            {
+                "controlComponents": ["Dropdown"],
+                "depth": 2
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        },
+        "react": {
+            "createClass": "createReactClass",
+            "pragma": "React",
+            "version": "detect"
+        }
+    },
+    "globals": {
+        "window": true,
+        "Notification": true,
+        "document": true,
+        "navigator": true
+    }
+}
