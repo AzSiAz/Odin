@@ -17,6 +17,7 @@
 vendor/
 
 pkged.go
+*.db
 
 # React
 
