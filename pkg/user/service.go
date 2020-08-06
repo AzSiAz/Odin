@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"odin/pkg/database"
 
+	"github.com/asdine/storm"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -34,12 +35,12 @@ func (us *UserService) CreateUser(username, email, password string) (*User, erro
 	log.WithFields(logrus.Fields{
 		"email":    email,
 		"username": username,
-	}).Info("Creating user")
+	}).Info("trying to create user")
 
 	db := us.db.DB
 
-	if u, err := us.GetUserByEmail(email); err != nil || u.Email == email {
-		return nil, fmt.Errorf("%w", err)
+	if _, err := us.GetUserByEmail(email); err != storm.ErrNotFound {
+		return nil, fmt.Errorf("user already exist or: %w", err)
 	}
 
 	hash, err := us.hashPassword(password)
@@ -60,6 +61,7 @@ func (us *UserService) CreateUser(username, email, password string) (*User, erro
 }
 
 func (us *UserService) GetUserByEmail(email string) (*User, error) {
+	log.WithField("email", email).Info("trying to get user from email")
 	db := us.db.DB
 
 	var user User
@@ -79,6 +81,20 @@ func (us *UserService) GetUserByUsername(username string) (*User, error) {
 	err := db.One("Username", username, &user)
 	if err != nil {
 		log.WithField("username", username).Error(err)
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (us *UserService) GetUserByID(ID uint64) (*User, error) {
+	log.WithField("id", ID).Info("trying to get user from id")
+	db := us.db.DB
+
+	var user User
+	err := db.One("ID", ID, &user)
+	if err != nil {
+		log.WithField("id", ID).Error(err)
 		return nil, err
 	}
 

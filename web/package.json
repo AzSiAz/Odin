@@ -8,12 +8,14 @@
 		"@emotion/styled": "^10.0.27",
 		"emotion-theming": "^10.0.27",
 		"history": "^5.0.0",
+		"ky": "^0.23.0",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
+		"react-query": "^2.5.13",
 		"react-router-dom": "^6.0.0-beta.0"
 	},
 	"scripts": {
-		"parcel-cleanup": "rm -R dist .parcel-cache",
+		"parcel-cleanup": "rm -Rf dist .parcel-cache",
 		"start": "npm run parcel-cleanup && parcel serve ./src/index.html",
 		"watch": "npm run parcel-cleanup && parcel watch ./src/index.html",
 		"build": "npm run parcel-cleanup && parcel build ./src/index.html"

@@ -5,6 +5,7 @@ import (
 	"odin/pkg/config"
 	"odin/pkg/database"
 	"odin/pkg/router/handler"
+	"odin/pkg/router/middlewares"
 
 	"github.com/gofiber/fiber"
 )
@@ -16,9 +17,13 @@ func InitRouter(app *fiber.App, db *database.StormDB, config *config.Config) {
 	// webhook := app.Group("webhooks")
 
 	api.Get("/", func(c *fiber.Ctx) {
-		c.SendString("Hello, world !!")
+		c.SendString("Hello, world from Odin !!")
 	})
 
 	api.Post("/login", h.Login)
 	api.Post("/signup", h.SignUp)
+
+	protected := middlewares.Protected(config)
+
+	api.Get("/user/me", protected, h.GetMyself)
 }

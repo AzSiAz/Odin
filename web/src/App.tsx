@@ -1,23 +1,16 @@
-import React, { useState } from 'react'
-import { Button } from '@chakra-ui/core'
+import React from 'react'
+import { useQuery } from 'react-query'
+
+import { getMyself } from './api'
 
 function App() {
-	const [test, setTest] = useState('test1')
+	const { data: me, error, isError, isLoading, isSuccess } = useQuery('me', getMyself)
+
 	return (
 		<div>
-			<header>
-				<p>
-					Edit <code>src/App.js</code> and save to reload {test}
-					<br />
-					<Button variantColor="teal" variant="solid" onClick={() => setTest('1234')}>
-						update test
-					</Button>
-                    
-				</p>
-				<a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-					Learn React 2
-				</a>
-			</header>
+			{isLoading && <div>Loading</div>}
+			{isError && <div>Error: {JSON.stringify(error)}</div>}
+			{isSuccess && <div>Me: {JSON.stringify(me)}</div>}
 		</div>
 	)
 }

@@ -17,14 +17,15 @@ func Protected(config *config.Config) fiber.Handler {
 	})
 }
 
+// TODO as a param for Proctected to move it to handler package
 func jwtError(c *fiber.Ctx, err error) {
 	if err.Error() == "Missing or malformed JWT" {
 		c.
-			Status(fiber.StatusBadRequest).
-			JSON(fiber.Map{"status": "error", "message": "Missing or malformed JWT", "data": nil})
+			Status(fiber.StatusUnauthorized).
+			JSON(fiber.Map{"message": "Missing or malformed JWT"})
 	} else {
 		c.
 			Status(fiber.StatusUnauthorized).
-			JSON(fiber.Map{"status": "error", "message": "Invalid or expired JWT", "data": nil})
+			JSON(fiber.Map{"message": "Invalid or expired JWT"})
 	}
 }
