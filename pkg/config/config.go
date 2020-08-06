@@ -11,10 +11,9 @@ import (
 )
 
 type Config struct {
-	Port              int
-	DBAdress          string
-	Host              string
-	Auth0WebhookToken string
+	Port     int
+	DBAdress string
+	Host     string
 }
 
 func New() *Config {
@@ -28,14 +27,8 @@ func New() *Config {
 		panic(fmt.Errorf("DB_ADRESS is empty: %w", err))
 	}
 
-	auth0WebhookToken := os.Getenv("WEBHOOK_HEADER_AUTH_TOKEN")
-	if auth0WebhookToken == "" {
-		panic(fmt.Errorf("WEBHOOK_HEADER_AUTH_TOKEN is empty: %w", err))
-	}
-
 	return &Config{
-		Port:              port,
-		DBAdress:          dbAdress,
-		Auth0WebhookToken: auth0WebhookToken,
+		Port:     port,
+		DBAdress: dbAdress,
 	}
 }
