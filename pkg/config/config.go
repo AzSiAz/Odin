@@ -11,9 +11,10 @@ import (
 )
 
 type Config struct {
-	Port     int
-	DBAdress string
-	Host     string
+	Port      int
+	DBAdress  string
+	Host      string
+	JWTSecret string
 }
 
 func New() *Config {
@@ -27,8 +28,14 @@ func New() *Config {
 		panic(fmt.Errorf("DB_ADRESS is empty: %w", err))
 	}
 
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if jwtSecret == "" {
+		panic(fmt.Errorf("JWT_SECRET is empty: %w", err))
+	}
+
 	return &Config{
-		Port:     port,
-		DBAdress: dbAdress,
+		Port:      port,
+		DBAdress:  dbAdress,
+		JWTSecret: jwtSecret,
 	}
 }

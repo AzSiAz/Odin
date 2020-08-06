@@ -1,41 +1,22 @@
 // Package database contains all action related to database access
 package database
 
-type Database interface {
-	Insert() error
-	Update() error
-	Upsert() error
-	Delete() error
-	List() error
-	Get() error
+import (
+	"github.com/asdine/storm"
+	"github.com/asdine/storm/v3/codec/msgpack"
+)
+
+type StormDB struct {
+	DB *storm.DB
 }
 
-type DB struct{}
+func New(addr string) (*StormDB, error) {
+	db, err := storm.Open(addr, storm.Codec(msgpack.Codec))
+	if err != nil {
+		return nil, err
+	}
 
-func New(addr string) *DB {
-	return &DB{}
-}
-
-func (d *DB) Insert() error {
-	return nil
-}
-
-func (d *DB) Update() error {
-	return nil
-}
-
-func (d *DB) Upsert() error {
-	return nil
-}
-
-func (d *DB) Delete() error {
-	return nil
-}
-
-func (d *DB) List() error {
-	return nil
-}
-
-func (d *DB) Get() error {
-	return nil
+	return &StormDB{
+		DB: db,
+	}, nil
 }
