@@ -12,7 +12,9 @@
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-query": "^2.5.13",
-		"react-router-dom": "^6.0.0-beta.0"
+		"react-router-dom": "^6.0.0-beta.0",
+		"recoil": "0.0.10",
+		"tailwindcss": "^1.6.2"
 	},
 	"scripts": {
 		"parcel-cleanup": "rm -Rf dist .parcel-cache",
@@ -48,6 +50,9 @@
 		"eslint-plugin-simple-import-sort": "5.0.2",
 		"eslint-plugin-sort-requires": "2.1.0",
 		"parcel": "^2.0.0-beta.1",
+		"postcss-custom-properties": "^9.1.1",
+		"postcss-import": "^12.0.1",
+		"postcss-url": "^8.0.0",
 		"prettier": "2.0.2"
 	}
 }

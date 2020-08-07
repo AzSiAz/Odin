@@ -18,5 +18,8 @@ func (h *Handler) GetMyself(c *fiber.Ctx) {
 		})
 	}
 
-	c.Status(fiber.StatusOK).JSON(user)
+	c.Status(fiber.StatusOK).JSON(Response{
+		Message: "user data",
+		Data:    user,
+	})
 }

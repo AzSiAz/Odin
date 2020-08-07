@@ -6,6 +6,7 @@ import { ThemeProvider, CSSReset, ColorModeProvider, DarkMode } from '@chakra-ui
 import { odinTheme } from './theme'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+import { RecoilRoot } from 'recoil'
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -14,7 +15,9 @@ ReactDOM.render(
 				<CSSReset />
 				<ColorModeProvider value="dark">
 					<DarkMode>
-						<App />
+						<RecoilRoot>
+							<App />
+						</RecoilRoot>
 					</DarkMode>
 				</ColorModeProvider>
 			</ThemeProvider>

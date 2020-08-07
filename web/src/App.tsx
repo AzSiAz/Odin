@@ -1,17 +1,26 @@
 import React from 'react'
 import { useQuery } from 'react-query'
+import { useRecoilState } from 'recoil'
 
+import { meState } from './atoms'
 import { getMyself } from './api'
+import { Loading } from './components/loading'
+import { LoginScene } from './scenes/login'
+import { HomeScene } from './scenes/home'
 
 function App() {
-	const { data: me, error, isError, isLoading, isSuccess } = useQuery('me', getMyself)
+	const [_, setMe] = useRecoilState(meState)
+	const { isError, isLoading, isSuccess } = useQuery('me', getMyself, {
+		retry: false,
+		onSuccess: ({ data }) => setMe(data),
+	})
 
 	return (
-		<div>
-			{isLoading && <div>Loading</div>}
-			{isError && <div>Error: {JSON.stringify(error)}</div>}
-			{isSuccess && <div>Me: {JSON.stringify(me)}</div>}
-		</div>
+		<>
+			{isLoading && <Loading />}
+			{isError && <LoginScene />}
+			{isSuccess && <HomeScene />}
+		</>
 	)
 }
 
