@@ -1,26 +1,16 @@
 import React from 'react'
-import { useQuery } from 'react-query'
-import { useRecoilState } from 'recoil'
 
-import { meState } from './atoms'
-import { getMyself } from './api'
-import { Loading } from './components/loading'
 import { LoginScene } from './scenes/login'
 import { HomeScene } from './scenes/home'
+import { Route, Routes } from 'react-router-dom'
 
 function App() {
-	const [_, setMe] = useRecoilState(meState)
-	const { isError, isLoading, isSuccess } = useQuery('me', getMyself, {
-		retry: false,
-		onSuccess: ({ data }) => setMe(data),
-	})
-
 	return (
-		<>
-			{isLoading && <Loading />}
-			{isError && <LoginScene />}
-			{isSuccess && <HomeScene />}
-		</>
+		<Routes>
+			<Route path="/" element={<HomeScene />} />
+			<Route path="/login" element={<LoginScene />} />
+			<Route path="/*" element={<div>Not found </div>} />
+		</Routes>
 	)
 }
 
