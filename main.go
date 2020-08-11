@@ -36,11 +36,16 @@ func main() {
 
 	router.InitRouter(app, db, config)
 
-	app.Use("/", middleware.FileSystem(middleware.FileSystemConfig{
+	efs := middleware.FileSystem(middleware.FileSystemConfig{
 		Root:   pkger.Dir("/web/dist"),
-		Index:  "index.html",
+		Index:  "web/dist/index.html",
 		Browse: false,
-	}))
+	})
+	app.Use("/", efs)
+	app.Use("*", efs)
+
+	// app.Use("/", middleware.FileSystem(pkger.Dir("/web/dist")))
+	// app.Use("*", middleware.FileSystem(pkger.Dir("/web/dist/index.html")))
 
 	logrus.Fatal(app.Listen(config.Port))
 }
