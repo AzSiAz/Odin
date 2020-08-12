@@ -38,7 +38,7 @@ func main() {
 
 	efs := middleware.FileSystem(middleware.FileSystemConfig{
 		Root:   pkger.Dir("/web/dist"),
-		Index:  "web/dist/index.html",
+		Index:  "index.html",
 		Browse: false,
 	})
 	app.Use("/", efs)
