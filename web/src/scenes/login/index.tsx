@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { routes } from '../../constants'
 
 export const LoginScene: React.FC<{}> = ({}) => {
 	return (
@@ -34,7 +36,7 @@ export const LoginScene: React.FC<{}> = ({}) => {
 						</div>
 					</div>
 
-					<div className="mt-6 flex items-center">
+					<div className="mt-6 flex justify-between">
 						<div className="text-sm leading-5">
 							<a
 								href="#"
@@ -42,6 +44,14 @@ export const LoginScene: React.FC<{}> = ({}) => {
 							>
 								Forgot your password?
 							</a>
+						</div>
+						<div className="text-sm leading-5">
+							<Link
+								to={routes.signUp}
+								className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+							>
+								Sign up
+							</Link>
 						</div>
 					</div>
 
