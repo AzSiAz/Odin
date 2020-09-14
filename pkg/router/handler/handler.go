@@ -7,7 +7,7 @@ import (
 	"odin/pkg/user"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/gofiber/fiber"
+	fiber "github.com/gofiber/fiber/v2"
 )
 
 type Handler struct {

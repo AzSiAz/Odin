@@ -5,32 +5,31 @@ package config
 import (
 	"fmt"
 	"os"
-	"strconv"
 
 	_ "github.com/joho/godotenv/autoload"
 )
 
 type Config struct {
-	Port      int
+	Port      string
 	DBAdress  string
 	Host      string
 	JWTSecret string
 }
 
 func New() *Config {
-	port, err := strconv.Atoi(os.Getenv("PORT"))
-	if err != nil {
-		panic(fmt.Errorf("PORT could not be converted to int: %w", err))
+	port := os.Getenv("PORT")
+	if port == "" {
+		panic(fmt.Errorf("PORT could not be converted to int: %s", port))
 	}
 
 	dbAdress := os.Getenv("DB_ADRESS")
 	if dbAdress == "" {
-		panic(fmt.Errorf("DB_ADRESS is empty: %w", err))
+		panic(fmt.Errorf("DB_ADRESS is empty: %s", dbAdress))
 	}
 
 	jwtSecret := os.Getenv("JWT_SECRET")
 	if jwtSecret == "" {
-		panic(fmt.Errorf("JWT_SECRET is empty: %w", err))
+		panic(fmt.Errorf("JWT_SECRET is empty: %s", jwtSecret))
 	}
 
 	return &Config{

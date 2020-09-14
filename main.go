@@ -4,13 +4,12 @@ package main
 
 import (
 	"odin/pkg/config"
-	"odin/pkg/database"
-	"odin/pkg/router"
 
-	"github.com/gofiber/cors"
-	"github.com/gofiber/fiber"
-	"github.com/gofiber/fiber/middleware"
-	"github.com/gofiber/helmet"
+	fiber "github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/filesystem"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/markbates/pkger"
 	"github.com/sirupsen/logrus"
 )
@@ -20,32 +19,26 @@ func main() {
 
 	logrus.Info("Starting Odin")
 	config := config.New()
-	db, err := database.New(config.DBAdress)
-	if err != nil {
-		panic(err)
-	}
+	// db, err := database.New(config.DBAdress)
+	// if err != nil {
+	// panic(err)
+	// }
 
 	app := fiber.New()
 
-	app.Use(middleware.Recover())
-	app.Use(middleware.RequestID())
-	app.Use(middleware.Logger())
-	app.Use(middleware.Compress())
-	app.Use(helmet.New())
-	app.Use(cors.New())
+	app.Use(compress.New())
+	app.Use(requestid.New())
+	app.Use(logger.New())
+	// app.Use(helmet.New())
+	// app.Use(cors.New())
 
-	router.InitRouter(app, db, config)
+	// router.InitRouter(app, db, config)
 
-	efs := middleware.FileSystem(middleware.FileSystemConfig{
-		Root:   pkger.Dir("/web/dist"),
-		Index:  "index.html",
-		Browse: false,
-	})
-	app.Use("/", efs)
-	app.Use("*", efs)
-
-	// app.Use("/", middleware.FileSystem(pkger.Dir("/web/dist")))
-	// app.Use("*", middleware.FileSystem(pkger.Dir("/web/dist/index.html")))
+	app.Use(filesystem.New(filesystem.Config{
+		Root:         pkger.Dir("/web/dist/"),
+		Index:        "index.html",
+		NotFoundFile: "/index.html",
+	}))
 
 	logrus.Fatal(app.Listen(config.Port))
 }

@@ -7,7 +7,7 @@ import (
 	"odin/pkg/router/handler"
 	"odin/pkg/router/middlewares"
 
-	"github.com/gofiber/fiber"
+	fiber "github.com/gofiber/fiber/v2"
 )
 
 // InitRouter Init backend routing for api
@@ -16,8 +16,8 @@ func InitRouter(app *fiber.App, db *database.StormDB, config *config.Config) {
 	api := app.Group("api")
 	// webhook := app.Group("webhooks")
 
-	api.Get("/", func(c *fiber.Ctx) {
-		c.SendString("Hello, world from Odin !!")
+	api.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, world from Odin !!")
 	})
 
 	api.Post("/login", h.Login)
